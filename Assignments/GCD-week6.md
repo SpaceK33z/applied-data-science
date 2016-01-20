@@ -53,7 +53,36 @@ res10: Array[(String, Int)] = Array((the,48639), ("",38786), (of,24098), (and,21
 ```
 
 # Activity 3
+RDD:
 
 ```
+scala> val textFile = sc.textFile("gutenberg-small/*.txt")
+scala> textFile.persist()
+res2: textFile.type = gutenberg-small/*.txt MapPartitionsRDD[1] at textFile at <console>:21
+```
 
+Transformations:
+
+```
+scala> counts.sample(true, .2).take(10)
+res11: Array[(String, Int)] = Array((at,4782), (on,3835), (they,3718), (be,3330), (her,2102), (been,1676), (some,1396), (some,1396), (than,1107), (before,1038))
+```
+
+```
+scala> val parallel = sc.parallelize(1 to 9)
+parallel: org.apache.spark.rdd.RDD[Int] = ParallelCollectionRDD[21] at parallelize at <console>:21
+scala> val par2 = sc.parallelize(5 to 15)
+par2: org.apache.spark.rdd.RDD[Int] = ParallelCollectionRDD[22] at parallelize at <console>:21
+scala>  parallel.union(par2).collect
+res12: Array[Int] = Array(1, 2, 3, 4, 5, 6, 7, 8, 9, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)
+```
+
+Actions:
+
+```
+scala> val ijsjes = sc.parallelize(List("cornetto", "magnum", "oreo", "Ben & Jerry's", "Carvel", "Bubbies", "magnum"))
+ijsjes: org.apache.spark.rdd.RDD[String] = ParallelCollectionRDD[28] at parallelize at <console>:21.1
+
+scala> ijsjes.map(k => (k, 1)).countByKey
+res14: scala.collection.Map[String,Long] = Map(magnum -> 2, Ben & Jerry's -> 1, oreo -> 1, cornetto -> 1, Carvel -> 1, Bubbies -> 1)
 ```

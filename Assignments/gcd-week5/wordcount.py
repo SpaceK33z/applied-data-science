@@ -5,7 +5,7 @@ from collections import Counter
 from stopwords import allStopWords
 import string
 
-all_files = glob.glob('Gutenberg SF/*.*')
+all_files = glob.glob('../Gutenberg SF/*.*')
 def file_contents(file_name):
     f = open(file_name)
     try:
